@@ -1,54 +1,67 @@
+<!doctype html>
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>J. Schwartz in 3D</title>
-    <meta name="description" content="Textures - A-Frame School">
-    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
-     <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-outline@%5E1.1.0/build/aframe-outline.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
 
-  <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" />
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <title>The AR Business Card</title>
+  <meta name="description" content="AR.js Business Card">
+  <meta name="author" content="Utkarsh Gupta">
+  <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+	<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
 
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
-
-<script type="text/javascript">
-
-
-    let checkExist = setInterval(function() {
-      if (document.getElementById("arjsDebugUIContainer")) {
-        let interface = document.getElementById("arjsDebugUIContainer");
-          interface.remove();
-      }
-    }, 100);
-      checkExist;
-
-  </script>
-  </head>
-<body style="margin : 0px; overflow: hidden;">
-  <main class="main">
-    <div id="splashScreen" class="AR-tip" style="display:none">
-      <p><strong>Hi there!</strong> <br> Once your camera loads, click "Start" and aim your device at the black square.
-        <div class="instructions">
-          <a><img src="https://cdn.glitch.com/5a8c2940-8667-40d7-9b93-b9e8050d72d1%2FNewInstruction.png?1528856565282" /></a>
-        </div>
-
-      </p>
-      <div class="gotit btn custom-button">Start</div>
-      <p>
-        <br><cite>*If your load takes longer than 30 seconds or you see black 3D images, try Chrome on desktop ;)</cite>
-    </p>
-    </div>
-    <div class="AR-tip" id="noMedia" style="display:none">
-    </div>
-
-  </main>
-  <a-scene embedded arjs="sourceType: webcam;" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" aframe-inspector-removed-embedded="undefined"><canvas class="a-canvas" data-aframe-canvas="true" width="300" hei
+	<script>
+	  AFRAME.registerComponent('navigate-on-click', {
+	    schema: {
+	      url: {default: ''}
+	    },
+	    init: function () {
+	      var data = this.data;
+	      var el = this.el;
+	      el.addEventListener('click', function () {
+		window.open(data.url, '_blank');
+	      });
+	    }
+	  });        
+	</script>
+</head>
+	
+<body style='margin : 0px; overflow: hidden;'>
+	<a-scene embedded arjs='trackingMethod: best;'>
+		
+		<a-assets>
+			<img id="github_icon" src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_github-512.png">
+			<img id="insta_icon" src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_instagram-512.png">
+			<img id="linkedin_icon" src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_likedin-512.png">
+			<img id="facebook_icon" src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_facebook-512.png">
+		</a-assets>
+		
+		<a-plane rotation="-90 0 0" color="#3199f9" opacity="0.95" navigate-on-click="url: https://www.linkedin.com/in/utkarshgpta/">
+			<a-image src="https://s.gravatar.com/avatar/78156753f9d8feaebe2418780bdc262b?s=250"></a-image>
+			<a-text align="center" value="Hello, World!\nThis is a business card.\nMade by Utkarsh\nSociete Generale GSC\nFind below the links to various platforms.\P.S.Exhibits random behaviour when opening links." color="black" width="1" z-offset="0.1"></a-text>
+		</a-plane>
+		
+		<a-plane position="0 0 0.8" color="transparent" opacity="0" width="2" height="0.3" rotation="-90 0 0">
+			<a-box src="#github_icon" position="-0.4 0 0" depth="0.15" height="0.15" width="0.15" navigate-on-click="url: http://github.com/UtkarshGpta">
+				<a-animation attribute="rotation" dur="7000" to="0 360 0" easing="linear" repeat="indefinite"></a-animation>
+			</a-box>
+			<a-box src="#insta_icon" position="0 0 0" depth="0.15" height="0.15" width="0.15" navigate-on-click="url: http://instagram.com/utkarshgpta">
+				<a-animation attribute="rotation" dur="7000" to="0 360 0" easing="linear" repeat="indefinite"></a-animation>
+			</a-box>
+			<a-box src="#linkedin_icon" position="0.4 0 0" depth="0.15" height="0.15" width="0.15" navigate-on-click="url: https://www.linkedin.com/in/utkarshgpta/">
+				<a-animation attribute="rotation" dur="7000" to="0 360 0" easing="linear" repeat="indefinite"></a-animation>
+			</a-box>
+			<a-box src="#facebook_icon" position="0.8 0 0" depth="0.15" height="0.15" width="0.15" navigate-on-click="url: http://facebook.com/utkarshgpta">
+				<a-animation attribute="rotation" dur="7000" to="0 360 0" easing="linear" repeat="indefinite"></a-animation>
+			</a-box>
+		</a-plane>
+		
+		<a-plane position="1.2 0 0" width="1" height="1" rotation="-90 0 0" opcatity="1">
+			<a-image src="img/assets/nyancat.jpg"></a-image>
+		</a-plane>
+		
+		<a-entity id="camera" cursor="rayOrigin: mouse"></a-entity>
+		<a-marker-camera preset='hiro'></a-marker-camera>
+	</a-scene>
+</body>
+</html>
